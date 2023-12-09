@@ -90,6 +90,29 @@ def show_note_by_name():
                                       if (result):
                                           print('Такой заметки нет')
 
+def delete_note():
+                                              num = input('Введите id заметки для удаления: ')
+                                              notes = []
+                                              with open('notes.csv', encoding='utf-8') as f_n:
+                                                  f_n_reader = DictReader(f_n)
+                                                  notes = list(f_n_reader)
+                                              create_file()
+                                              with open('notes.csv', 'a', encoding='utf-8') as f_n:
+                                                  result = True
+                                                  for el in notes:
+                                                      if el['id'] != num:
+                                                          f_n_writer = DictWriter(f_n, fieldnames=['id', 'Заголовок',
+                                                                                                   'Заметка',
+                                                                                                   'Дата создания',
+                                                                                                   'Дата изменения'])
+                                                          f_n_writer.writerow(el)
+                                                      else:
+                                                          result = False
+                                                  if (result):
+                                                      print('Такой заметки нет')
+                                                  else:
+                                                      print('Заметка удалена')
+
 def main():
     print("Создать заметку: create")
     print("Список заметок: read")
@@ -126,5 +149,11 @@ def main():
                 break
             else:
                 show_note_by_name()
+        elif command == 'delete':
+            if not exists('notes.csv'):
+                print('Заметок нет')
+                break
+            else:
+                delete_note()
 
 main()
