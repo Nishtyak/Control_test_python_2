@@ -51,6 +51,30 @@ def read_notes():
               for item in notes:
                   print(item['id'] + ' | ' + item['Заголовок'] + ' | ' + item['Дата создания'])
 
+def edit_note():
+                      num = input('Введите id заметки для редактирования: ')
+                      notes = []
+                      with open('notes.csv', encoding='utf-8') as f_n:
+                          f_n_reader = DictReader(f_n)
+                          notes = list(f_n_reader)
+                      create_file()
+                      with open('notes.csv', 'a', encoding='utf-8') as f_n:
+                          result = True
+                          for el in notes:
+                              if el['id'] == num:
+                                  el['Заголовок'] = input("Введите новый заголовок: ")
+                                  el['Заметка'] = input('Введите новый текст заметки: ')
+                                  time = str(datetime.datetime.today().strftime("%Y-%m-%d %H.%M"))
+                                  el['Дата изменения'] = time
+                                  result = False
+                              f_n_writer = DictWriter(f_n, fieldnames=['id', 'Заголовок', 'Заметка', 'Дата создания',
+                                                                       'Дата изменения'])
+                              f_n_writer.writerow(el)
+                          if (result):
+                              print('Такой заметки нет')
+                          else:
+                              print('Заметка изменена')
+
 def main():
     print("Создать заметку: create")
     print("Список заметок: read")
@@ -75,5 +99,11 @@ def main():
                 print('Заметок нет')
                 break
             read_notes()
+        elif command == 'edit':
+            if not exists('notes.csv'):
+                print('Заметок нет')
+                break
+            else:
+                edit_note()
 
 main()
