@@ -150,31 +150,26 @@ def main():
                 record_note()
         elif command == 'read':
             if not exists('notes.csv'):
-                print('Заметок нет')
-                break
-            read_notes()
+                print('Заметок нет. Создайте заметку')
+            else: read_notes()
         elif command == 'edit':
             if not exists('notes.csv'):
-                print('Заметок нет')
-                break
+                print('Заметок нет. Создайте заметку')
             else:
                 edit_note()
         elif command == 'name':
             if not exists('notes.csv'):
-                print('Заметок нет')
-                break
+                print('Заметок нет. Создайте заметку')
             else:
                 show_note_by_name()
         elif command == 'delete':
             if not exists('notes.csv'):
-                print('Заметок нет')
-                break
+                print('Заметок нет. Создайте заметку')
             else:
                 delete_note()
         elif command == 'time':
                 if not exists('notes.csv'):
-                    print('Заметок нет')
-                    break
+                    print('Заметок нет. Создайте заметку')
                 else:
                     show_note_by_time()
 
