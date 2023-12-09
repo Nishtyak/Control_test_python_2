@@ -43,6 +43,14 @@ def write_file(lst):
     with open("notes.csv", "a", encoding='utf-8') as data:
       data.write(f'{lst[0]},{lst[1]},{lst[2]},{lst[3]},{lst[4]}\n')
 
+def read_notes():
+          with open('notes.csv', encoding='utf-8') as f_n:
+              f_n_reader = DictReader(f_n)
+              notes = list(f_n_reader)
+              print('id | Заголовок | Дата создания')
+              for item in notes:
+                  print(item['id'] + ' | ' + item['Заголовок'] + ' | ' + item['Дата создания'])
+
 def main():
     print("Создать заметку: create")
     print("Список заметок: read")
@@ -62,5 +70,10 @@ def main():
                 record_note()
             else:
                 record_note()
+        elif command == 'read':
+            if not exists('notes.csv'):
+                print('Заметок нет')
+                break
+            read_notes()
 
 main()
