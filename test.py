@@ -113,6 +113,22 @@ def delete_note():
                                                   else:
                                                       print('Заметка удалена')
 
+def show_note_by_time():
+                                                          find_time = input(
+                                                              'Введите время в формате год-месяц-день часы.минуты: ')
+                                                          notes = []
+                                                          with open('notes.csv', encoding='utf-8') as f_n:
+                                                              f_n_reader = DictReader(f_n)
+                                                              notes = list(f_n_reader)
+                                                              result = True
+                                                              for el in notes:
+                                                                  if el['Дата создания'] == find_time:
+                                                                      print("Искомая заметка: ")
+                                                                      print(*el.values())
+                                                                      result = False
+                                                              if (result):
+                                                                  print('Такой заметки нет')
+
 def main():
     print("Создать заметку: create")
     print("Список заметок: read")
@@ -155,5 +171,11 @@ def main():
                 break
             else:
                 delete_note()
+        elif command == 'time':
+                if not exists('notes.csv'):
+                    print('Заметок нет')
+                    break
+                else:
+                    show_note_by_time()
 
 main()
